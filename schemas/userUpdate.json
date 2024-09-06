@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "User Update Schema",
+    "properties": {
+        "password": {
+            "type": "string",
+            "minLength": 5
+        },
+        "firstName": {
+            "type": "string",
+            "minLength": 1
+        },
+        "lastName": {
+            "type": "string",
+            "minLength": 1
+        },
+        "location": {
+            "type": "string",
+            "minLength": 2
+        },
+        "bio": {
+            "type": "string",
+            "minLength": 1
+        },
+        "profilePic": {
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": []
+}
