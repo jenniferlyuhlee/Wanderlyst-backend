@@ -1,14 +1,14 @@
 "use strict";
 /** User Model */
 
-const db = require("../db");
+const db = require("../config/db");
 const bcrypt = require("bcrypt");
 
-const {BCRYPT_WORK_FACTOR} = require("../config");
+const {BCRYPT_WORK_FACTOR} = require("../config/config");
 const { NotFoundError, 
         BadRequestError, 
         UnauthorizedError
-} = require ("../expressError");
+} = require ("../config/expressError");
 const { sqlForPartialUpdate } = require("../helpers/updateQueries");
 
 //** Class User with db query methods for all users. */

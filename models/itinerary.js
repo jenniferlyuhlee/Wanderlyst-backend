@@ -1,9 +1,9 @@
 "use strict";
 /** Itinerary Model */
 
-const db = require("../db");
+const db = require("../config/db");
 const { NotFoundError, 
-    BadRequestError } = require("../expressError");
+    BadRequestError } = require("../config/expressError");
 const { sqlForPartialUpdate } = require("../helpers/updateQueries");
 
 //** Class Itinerary with db query method for all tags. */

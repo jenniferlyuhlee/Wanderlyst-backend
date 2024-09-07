@@ -10,7 +10,7 @@ const userUpdateSchema = require("../schemas/userUpdate.json");
 
 // Model & Error imports
 const User = require("../models/user");
-const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require("../config/expressError");
 
 
 /** GET/:username => {user}

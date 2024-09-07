@@ -8,6 +8,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config");
 async function commonBeforeAll(){
     await db.query("DELETE FROM users");
     await db.query("DELETE FROM itineraries");
+    await db.query("DELETE FROM tags");
   
     // insert test user data
     await db.query(`
@@ -36,6 +37,14 @@ async function commonBeforeAll(){
         VALUES (1, 'u1', 'testItin', 3, 'testCity', 'testCountry','testDesc');
     `);
     
+    // insert test tag data
+    await db.query(`
+        INSERT INTO tags(id, name, description)
+        VALUES (1, 'testTag1', 'testDescription1')`)
+    // associate with itinerary
+    await db.query(`
+        INSERT INTO itin_tags(itin_id, tag_id)
+        VALUES (1, 1)`)
 }
 
 async function commonBeforeEach() {

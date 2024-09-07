@@ -4,7 +4,7 @@
 const express = require("express");
 // cors?
 
-const { NotFoundError } = require("./expressError");
+const { NotFoundError } = require("./config/expressError");
 // routes variables
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");

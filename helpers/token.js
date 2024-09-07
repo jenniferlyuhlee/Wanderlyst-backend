@@ -1,7 +1,7 @@
 "use strict";
 
 const jwt = require("jsonwebtoken")
-const { SECRET_KEY } = require("../config")
+const { SECRET_KEY } = require("../config/config")
 
 /** Helper function to create and return signed JWT from user data.
  * @params user

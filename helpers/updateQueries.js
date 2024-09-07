@@ -1,6 +1,6 @@
 "use strict";
 
-const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require("../config/expressError");
 
 /** Helper function for update queries
  * Builds SET clauses of SQL statements.

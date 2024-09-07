@@ -10,7 +10,7 @@ const itinCreateSchema = require("../schemas/itinCreate.json");
 
 // Model & Error imports
 const Itinerary = require("../models/itinerary");
-const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require("../config/expressError");
 
 
 /** POST/ {itinerary} => {itinerary} 

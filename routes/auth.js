@@ -11,7 +11,7 @@ const userAuthSchema = require("../schemas/userAuth.json")
 
 // Model, Error, & token imports
 const User = require("../models/user");
-const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require("../config/expressError");
 const { createToken } = require("../helpers/token")
 
 

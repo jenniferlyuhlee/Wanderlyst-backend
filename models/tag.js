@@ -1,8 +1,8 @@
 "use strict";
 /** Tag Model */
 
-const db = require("../db");
-const { NotFoundError } = require("../expressError");
+const db = require("../config/db");
+const { NotFoundError } = require("../config/expressError");
 
 //** Class Tag with db query method for all tags. */
 class Tag{
@@ -28,7 +28,7 @@ class Tag{
                 FROM itineraries as i
                 LEFT JOIN itin_tags as it
                 ON i.id = it.itin_id
-                LEFT JOIN 
+                LEFT JOIN tags as t
                 ON it.tag_id = t.id
                 WHERE t.name = $1`, [name]
         );

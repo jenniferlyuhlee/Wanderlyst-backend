@@ -1,8 +1,8 @@
 "use strict";
 /** Location Model */
 
-const db = require("../db");
-const { BadRequestError } = require("../expressError");
+const db = require("../config/db");
+const { BadRequestError } = require("../config/expressError");
 
 /** Class Place with db query methods for all places. */
 class Place{
