@@ -2,7 +2,7 @@
 /** Tests for updateQueries helper function */
 
 const { sqlForPartialUpdate } = require("./updateQueries")
-const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require("../config/expressError");
 
 describe("sqlForPartialUpdate", () => {
     test("works as expected", () => {

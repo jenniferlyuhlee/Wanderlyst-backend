@@ -39,10 +39,18 @@ class ForbiddenError extends ExpressError{
     }
 }
 
+/** 422 Unprocessable error */
+class UnprocessableError extends ExpressError{
+    constructor(msg = "Inputted content could not be processed"){
+        super(msg, 422)
+    }
+}
+
 module.exports = {
     ExpressError,
     NotFoundError,
     BadRequestError,
     UnauthorizedError,
-    ForbiddenError
+    ForbiddenError,
+    UnprocessableError
 };

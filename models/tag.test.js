@@ -1,12 +1,9 @@
 "use strict";
 /** Tests for Tag model */
 
-const db = require("../db");
+const db = require("../config/db");
 const Tag = require("./tag");
-const { NotFoundError, 
-    BadRequestError, 
-    UnauthorizedError
-} = require ("../expressError");
+const { NotFoundError } = require ("../config/expressError");
 const {
     commonBeforeAll,
     commonBeforeEach,

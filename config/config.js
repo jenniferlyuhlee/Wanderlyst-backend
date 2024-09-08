@@ -5,8 +5,9 @@ require("dotenv").config();
 require("colors");
 
 // Retrieve environmental variables
-const SECRET_KEY = process.env.SECRET_KEY
-const PORT = +process.env.PORT
+const SECRET_KEY = process.env.SECRET_KEY;
+const PORT = +process.env.PORT;
+const API_KEY = process.env.API_KEY;
 
 // Get db uri based on node environment - test or prod/dev
 function getDatabaseURI(){
@@ -27,6 +28,7 @@ console.log("Database:".yellow, getDatabaseURI());
 console.log("***********".green)
 
 module.exports = {
+    API_KEY,
     SECRET_KEY, 
     PORT, 
     BCRYPT_WORK_FACTOR,

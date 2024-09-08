@@ -10,6 +10,8 @@
   "author": "Jennifer",
   "license": "ISC",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.4.0",
+    "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "colors": "^1.4.0",
     "dotenv": "^16.4.5",

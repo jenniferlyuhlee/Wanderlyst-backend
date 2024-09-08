@@ -2,7 +2,7 @@
 /** Tests for token helper function */
 
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = require("../config");
+const { SECRET_KEY } = require("../config/config");
 const { createToken } = require("./token");
 
 describe("createToken", () => {

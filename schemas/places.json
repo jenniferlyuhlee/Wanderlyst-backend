@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "Places Schema",
+    "properties": {
+        "itinId": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string",
+            "minLength": 1
+        },
+        "address": {
+            "type": "string",
+            "minLength": 1
+        },
+        "lat": {
+            "type": "number"
+        },
+        "lng": {
+            "type": "number"
+        },
+        "seq": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+        },
+        "description": {
+            "type": "string",
+            "minLength": 1
+        },
+        "image": {
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": [
+        "itinId",
+        "name",
+        "address",
+        "lat",
+        "lng",
+        "sequence",
+        "description"
+    ]
+}

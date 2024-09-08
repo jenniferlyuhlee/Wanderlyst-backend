@@ -2,8 +2,8 @@
 /** Test functions to run before tests */
 
 const bcrypt = require("bcrypt");
-const db = require("../db");
-const { BCRYPT_WORK_FACTOR } = require("../config");
+const db = require("../config/db");
+const { BCRYPT_WORK_FACTOR } = require("../config/config");
 
 async function commonBeforeAll(){
     await db.query("DELETE FROM users");

@@ -1,12 +1,12 @@
 "use strict";
 /** Tests for User model */
 
-const db = require("../db");
+const db = require("../config/db")
 const User = require("./user")
 const { NotFoundError, 
     BadRequestError, 
     UnauthorizedError
-} = require ("../expressError");
+} = require ("../config/expressError");
 const {
     commonBeforeAll,
     commonBeforeEach,
