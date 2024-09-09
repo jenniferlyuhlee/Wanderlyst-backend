@@ -30,7 +30,7 @@ CREATE TABLE places (
     lat DECIMAL(10,7) NOT NULL,
     lng DECIMAL(10,7) NOT NULL,
     seq INT NOT NULL,
-    description TEXT NOT NULL
+    description TEXT NOT NULL,
     image TEXT
 );
 

@@ -9,7 +9,7 @@ const { NotFoundError,
         BadRequestError, 
         UnauthorizedError
 } = require ("../config/expressError");
-const { sqlForPartialUpdate } = require("../helpers/updateQueries");
+const { sqlForPartialUpdate } = require("../helpers/sqlHelper");
 
 //** Class User with db query methods for all users. */
 class User{
@@ -155,7 +155,7 @@ class User{
             {
                 firstName: "first_name",
                 lastName: "last_name",
-                profilePic: "profile_pic",
+                profilePic: "profile_pic"
             }
         );
 

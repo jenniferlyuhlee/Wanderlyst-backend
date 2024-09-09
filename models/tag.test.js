@@ -1,7 +1,6 @@
 "use strict";
 /** Tests for Tag model */
 
-const db = require("../config/db");
 const Tag = require("./tag");
 const { NotFoundError } = require ("../config/expressError");
 const {

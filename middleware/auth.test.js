@@ -2,14 +2,14 @@
 /** Tests for middleware */
 
 const jwt = require("jsonwebtoken");
-const { UnauthorizedError } = require("../expressError");
+const { UnauthorizedError } = require("../config/expressError");
 const {
     authenticateJWT,
     ensureLoggedIn,
     ensureCorrectUserOrAdmin
 } = require("./auth")
 
-const { SECRET_KEY } = require("../config");
+const { SECRET_KEY } = require("../config/config");
 const testJwt = jwt.sign({ username: "test", isAdmin: false}, SECRET_KEY);
 const badJwt = jwt.sign({ username: "test", isAdmin: false}, "wrongkey");
 

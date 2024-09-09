@@ -2,8 +2,8 @@
 /** Middleware to handle authentication in routes. */
 
 const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = require("../config");
-const { UnauthorizedError } = require("../expressError");
+const { SECRET_KEY } = require("../config/config");
+const { UnauthorizedError } = require("../config/expressError");
 
 /** Authenticate user before every request
  * Verifies token if provided, and stores payload {username, isAdmin}

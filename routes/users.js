@@ -14,8 +14,10 @@ const { BadRequestError } = require("../config/expressError");
 
 
 /** GET/:username => {user}
- * Returns {username, firstName, lastName, email}
- * where itins is {----------------------}
+ * Returns {username, email, firstName, lastName, location,
+ * bio, profilePic, createdAt, isAdmin, itineraries, likes }
+ *      where itineraries is [{itin}, {itin}]
+ *      and likes is [{itin}, {itin}]
  * Authorization required: logged in users
  */
 router.get("/:username", async function(req, res, next){
@@ -30,15 +32,23 @@ router.get("/:username", async function(req, res, next){
 
 
 /** PATCH/:username {user} => {user}
- * Data can include {firstName, lastName, password, location, bio, profilePic}
+ * Data can include {username, password, firstName, lastName, location, bio, profilePic}
  * Authorization required: matching user or admin
 */
 router.patch("/:username", async function(req, res, next){
     try{
+        // validating header data to prevent updating admin status
+        const forbiddenFields = ["isAdmin", "is_admin"]
+        forbiddenFields.forEach(field => {
+            if(req.body.hasOwnProperty(field)){
+                throw new BadRequestError(`Update not allowed for field: ${field}`)
+            }
+        });
+        
         const validator = jsonschema.validate(req.body, userUpdateSchema);
         if(!validator.valid){
             const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(`"Fix inputs: ${errs}`)
+            throw new BadRequestError(`Fix inputs: ${errs}`)
         }
         const user = await User.update(req.params.username, req.body);
         return res.json({ user })

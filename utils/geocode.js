@@ -34,7 +34,7 @@ async function getCoords(address) {
 module.exports = { getCoords };
 
 // (async () => {
-//     const address = '1600 Amphitheatre Parkway, Mountain View, CA';
+//     const address = 'Paris, France';
 //     const coords = await getCoords(address);
 //     console.log(coords); // { latitude: 37.4224764, longitude: -122.0842499 }
 // })();

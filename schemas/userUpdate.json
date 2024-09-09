@@ -4,6 +4,11 @@
     "type": "object",
     "title": "User Update Schema",
     "properties": {
+        "username": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 25
+        },
         "password": {
             "type": "string",
             "minLength": 5

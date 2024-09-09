@@ -12,7 +12,7 @@ const Tag = require("../models/tag");
  */
 router.get("/:name", async function(req, res, next){
     try{
-        const tag = await Tag.get(req.params.username);
+        const tag = await Tag.get(req.params.name);
         return res.json({ tag })
     }
     catch(err){

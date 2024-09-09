@@ -9,7 +9,7 @@ async function commonBeforeAll(){
     await db.query("DELETE FROM users");
     await db.query("DELETE FROM itineraries");
     await db.query("DELETE FROM tags");
-  
+
     // insert test user data
     await db.query(`
         INSERT INTO USERS(username, 

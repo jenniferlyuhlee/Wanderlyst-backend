@@ -7,10 +7,10 @@ const { BadRequestError } = require("../config/expressError");
 /** Class Place with db query methods for all places. */
 class Place{
 
-    /** Creates new location entry
+    /** Adds new location entry
      * Returns place obj
      */
-    static async create({itinId, name, address, lat, lng, seq, description, image}){
+    static async add({itinId, name, address, lat, lng, seq, description, image}){
         const result = await db.query(
             `INSERT INTO places
                 (itin_id,

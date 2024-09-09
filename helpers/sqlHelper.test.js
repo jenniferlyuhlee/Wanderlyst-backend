@@ -1,7 +1,7 @@
 "use strict";
 /** Tests for updateQueries helper function */
 
-const { sqlForPartialUpdate } = require("./updateQueries")
+const { sqlForPartialUpdate, buildValuesClause } = require("./sqlHelper")
 const { BadRequestError } = require("../config/expressError");
 
 describe("sqlForPartialUpdate", () => {
@@ -23,5 +23,14 @@ describe("sqlForPartialUpdate", () => {
         catch(err){
             expect(err instanceof BadRequestError).toBeTruthy();
         } 
+    });
+});
+
+describe("buildValuesClause", () => {
+    test("works as expected", () => {
+        expect(buildValuesClause(1, [1, 2, 3])).toEqual({
+            values: [1, 1, 2, 3],
+            placeholders: "($1, $2), ($1, $3), ($1, $4)"
+        })
     });
 });

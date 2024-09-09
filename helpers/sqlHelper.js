@@ -24,4 +24,24 @@ function sqlForPartialUpdate(dataToUpdate, jsToSql){
     };
 }
 
-module.exports = {sqlForPartialUpdate}
+
+/** Helper function for insert queries
+ * Builds VALUES clause from array
+ * 
+ * @param itinId 
+ * @param tagsId [id, id, id]
+ * @returns {Object} {values: [itinId, tagId, tagId], placeholders }
+ *      where placeholders is the value placeholder string "($1, $2), (1, $3)..."
+ */
+function buildValuesClause(itinId, dataArr){
+    const values = [itinId];
+    // push tag ids to values array
+    const placeholders = dataArr.map((id, i) => {
+        values.push(id);
+        return `($1, $${i+2})`;
+    }).join(", ");
+    
+    return { values, placeholders }
+}
+
+module.exports = { sqlForPartialUpdate, buildValuesClause }

@@ -4,7 +4,8 @@
 const db = require("../config/db");
 const { NotFoundError, 
     BadRequestError } = require("../config/expressError");
-const { sqlForPartialUpdate } = require("../helpers/updateQueries");
+const { sqlForPartialUpdate, buildValuesClause } = require("../helpers/sqlHelper");
+const Place = require("./place") 
 
 //** Class Itinerary with db query method for all tags. */
 class Itinerary{
@@ -23,11 +24,8 @@ class Itinerary{
                 country,
                 description)
              VALUES ($1, $2, $3, $4, $5, $6)
-             RETURNING username, title, 
-                        duration, city, country, description created_at
-                first_name AS "firstName",
-                last_name AS "lastName",
-                is_admin AS "isAdmin"`,
+             RETURNING id, username, title, 
+                        duration, city, country, description, created_at`,
             [username, title, duration, city, country, description]
         );
         const itinerary = result.rows[0];
@@ -81,7 +79,7 @@ class Itinerary{
         // itinerary.likes - likesResult.rows[0]
         const result = await db.query(
             `SELECT i.id, i.username, i.title, i.duration, i.city, 
-                    i.country, i.description, i.created_at AS "createdAt,
+                    i.country, i.description, i.created_at AS "createdAt",
                     array_agg(t.name) AS tags,
                     COUNT(l.itin_id) AS likes
             FROM itineraries AS i
@@ -97,7 +95,20 @@ class Itinerary{
         const itinerary = result.rows[0];
         if(!itinerary) throw new NotFoundError(`Itinerary with id ${id} doesn't exist`);
 
+        const places = await Place.getItinPlaces(id);
+        itinerary.places = places;
+
         return itinerary;
+   };
+
+   static async addTag(id, tags){
+        if(tags.length === 0) throw new BadRequestError(`Must add atleast 1 tag`);
+        // helps create clause to insert multiple tags in 1 query
+        const { values, placeholders } = buildValuesClause(id, tags);
+        const query = `INSERT INTO itin_tags (itin_id, tag_id)
+                       VALUES ${placeholders}`;
+        
+        await db.query(query, values);
    }
 }
 

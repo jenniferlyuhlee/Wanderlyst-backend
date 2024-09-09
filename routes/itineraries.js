@@ -12,6 +12,9 @@ const itinCreateSchema = require("../schemas/itinCreate.json");
 const Itinerary = require("../models/itinerary");
 const { BadRequestError } = require("../config/expressError");
 
+// Utility functions
+const { toMapData }= require("../utils/maps")
+
 
 /** POST/ {itinerary} => {itinerary} 
  * Returns obj with newly inserted itinerary data
@@ -38,8 +41,9 @@ router.post("/", async function (req, res, next){
 */
 router.get("/:id", async function(req, res, next){
    try{
-       const tag = await Itinerary.get(req.params.username);
-       return res.json({ tag })
+       const itinerary = await Itinerary.get(req.params.id);
+       const mapData = await toMapData(itinerary);
+       return res.json({ itinerary, mapData})
    }
    catch(err){
        return next(err);
