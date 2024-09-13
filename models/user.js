@@ -201,20 +201,20 @@ class User{
      */
     static async toggleLike(username, id){
         // checks if user exists
-        const userCheck = await db.query(
-            `SELECT username
-            FROM users
-            WHERE username = $1`, [username]
-        )
-        if(!userCheck.rows[0]) throw new NotFoundError(`User doesn't exist: ${username}`);
+        // const userCheck = await db.query(
+        //     `SELECT username
+        //     FROM users
+        //     WHERE username = $1`, [username]
+        // )
+        // if(!userCheck.rows[0]) throw new NotFoundError(`User doesn't exist: ${username}`);
 
         // checks if itinerary exists
-        const itinCheck = await db.query(
-            `SELECT id 
-            FROM itineraries
-            WHERE id = $1`, [id]
-        );
-        if (!itinCheck.rows[0]) throw new NotFoundError(`Itinerary with id ${id} doesn't exist`)
+        // const itinCheck = await db.query(
+        //     `SELECT id 
+        //     FROM itineraries
+        //     WHERE id = $1`, [id]
+        // );
+        // if (!itinCheck.rows[0]) throw new NotFoundError(`Itinerary with id ${id} doesn't exist`)
 
         // checks if user already liked itinerary
         const likeCheck = await db.query(

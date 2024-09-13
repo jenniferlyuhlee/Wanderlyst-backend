@@ -4,7 +4,8 @@
 const { getCoords } = require("./geocode")
 
 /** Converts itinerary object data into Google Maps API-compatible data
- * Returns {center: {lat, lng}, placeList: [name, address, {coordinates}]}
+ * @param {Object} itinerary 
+ * @return {Object} {center: {lat, lng}, placeList: [name, address, {coordinates}]}
  */
 async function toMapData(itinerary){
     try{

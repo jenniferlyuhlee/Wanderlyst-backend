@@ -42,5 +42,6 @@
         "lng",
         "sequence",
         "description"
-    ]
+    ],
+    "additionalProperties": false
 }

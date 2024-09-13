@@ -3,7 +3,7 @@
 
 const jwt = require("jsonwebtoken");
 const { SECRET_KEY } = require("../config/config");
-const { UnauthorizedError } = require("../config/expressError");
+const { ForbiddenError, UnauthorizedError } = require("../config/expressError");
 
 /** Authenticate user before every request
  * Verifies token if provided, and stores payload {username, isAdmin}
@@ -45,8 +45,9 @@ function ensureCorrectUserOrAdmin(req, res, next){
         const user = res.locals.user;
         const { username } = req.params;
         if(!(user && (user.isAdmin || user.username === username))){
-            throw new UnauthorizedError("Must be correct user or admin");
+            throw new ForbiddenError("Must be correct user or admin");
         }
+        return next();
     }
     catch(err){
         return next(err);

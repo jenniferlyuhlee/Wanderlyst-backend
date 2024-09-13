@@ -18,6 +18,8 @@ CREATE TABLE itineraries (
     duration INT NOT NULL,
     city TEXT NOT NULL,
     country TEXT NOT NULL,
+    lat DECIMAL(10,7) NOT NULL,
+    lng DECIMAL(10,7) NOT NULL,
     description TEXT NOT NULL, 
     created_at DATE NOT NULL DEFAULT CURRENT_DATE
 );

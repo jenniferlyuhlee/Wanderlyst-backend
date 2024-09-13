@@ -22,7 +22,6 @@
         },
         "email": {
             "type": "string",
-            "minLength": 8,
             "format": "email"
         },
         "firstName": {
@@ -33,5 +32,6 @@
             "type": "string",
             "minLength": 1
         }
-    }
+    },
+    "additionalProperties": false
 }

@@ -7,6 +7,19 @@ const { NotFoundError } = require("../config/expressError");
 //** Class Tag with db query method for all tags. */
 class Tag{
 
+    /** Adds new tag
+     * Returns tag obj
+     */
+    static async add({name, description}){
+        const result = await db.query(`
+            INSERT INTO tags (name, description)
+            VALUES ($1, $2)
+            RETURNING id`, [name, description]
+        );
+        const tag = result.rows[0];
+        return tag;
+    }
+
     /** Fetches details about tag
      * Returns tag obj {name, description, itineraries: [{itin}, {itin}]}
      * where itineraries is an array of objects holding itinerary data

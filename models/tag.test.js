@@ -4,20 +4,29 @@
 const Tag = require("./tag");
 const { NotFoundError } = require ("../config/expressError");
 const {
-    commonBeforeAll,
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll,
 } = require("./_testCommon");
 
 // Common test functions
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
-/** Tag.get */
-describe("get", () => {
+/** Tag.add ---------- */
+describe("Tag.add", () => {
+    test("works as expected", async () => {
+        const tag = await Tag.add({
+            name: "newTag", 
+            description: "testing add tag"
+        });
+        expect(tag).toEqual({id: expect.any(Number)});
+    });
+});
+
+/** Tag.get ---------- */
+describe("Tag.get", () => {
     test("works as expected", async () => {
         const tag = await Tag.get("testTag1");
         expect(tag).toEqual({

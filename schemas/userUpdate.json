@@ -26,13 +26,13 @@
             "minLength": 2
         },
         "bio": {
-            "type": "string",
-            "minLength": 1
+            "type": "string"
         },
         "profilePic": {
             "type": "string",
             "format": "uri"
         }
     },
-    "required": []
+    "required": [],
+    "additionalProperties": false
 }

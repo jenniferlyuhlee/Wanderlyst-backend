@@ -5,7 +5,9 @@ const express = require("express");
 // cors?
 
 const { NotFoundError } = require("./config/expressError");
-// routes variables
+const { authenticateJWT } = require("./middleware/auth")
+
+// routing variables
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
 const tagRoutes = require("./routes/tags");
@@ -15,7 +17,7 @@ const app = express();
 // app.use cors?
 app.use(express.json())
 // app.use morgan?
-// app.use auth middleware
+app.use(authenticateJWT);
 
 /** Routes */
 app.use("/auth", authRoutes);

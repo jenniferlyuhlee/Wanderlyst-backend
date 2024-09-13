@@ -2,6 +2,7 @@
 \prompt 'Return for yes or control-C to cancel >' foo
 
 \connect wanderlyst_test
+
 DROP DATABASE wanderlyst;
 CREATE DATABASE wanderlyst;
 \connect wanderlyst

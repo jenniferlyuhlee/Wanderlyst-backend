@@ -7,7 +7,8 @@ const { API_KEY } = require("../config/config");
 const { UnprocessableError }= require("../config/expressError")
 
 /** Fetches coordinates based on address sent to Google Geocoding API
- * Returns {lat, lng}
+ * @param {String} address   
+ * @returns {Object} {lat, lng}
 */
 async function getCoords(address) {
     try{
@@ -31,7 +32,23 @@ async function getCoords(address) {
 // run "node utils/geocode.js"
 // console.log(API_KEY)
 
-module.exports = { getCoords };
+
+/** Modified list of places data to include lat, lng based on address
+ * calls the geocode helper function
+ * @param {Array} places - Array of place objects
+ * @returns {Array} - Array of place objects w/ lat, lng 
+ */
+async function updatePlacesWithCoords(places){
+    const updatedPlaces = await Promise.all(
+        places.map(async (p) => {
+            let { lat, lng } = await getCoords(p.address);
+            return {...p, lat, lng};
+        })
+    );
+    return updatedPlaces;
+}
+
+module.exports = { getCoords , updatePlacesWithCoords};
 
 // (async () => {
 //     const address = 'Paris, France';

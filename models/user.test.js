@@ -8,14 +8,12 @@ const { NotFoundError,
     UnauthorizedError
 } = require ("../config/expressError");
 const {
-    commonBeforeAll,
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll,
 } = require("./_testCommon");
 
 // Common test functions
-beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
@@ -205,18 +203,18 @@ describe("toggleLike", () => {
         const res2 = await db.query("SELECT * FROM likes WHERE username = 'u2'");
         expect(res2.rows.length).toEqual(0);
     });
-    test("not found error if user doesn't exist", async () => {
-        try{
-            await User.toggleLike("u4", 1);
-        }catch(err){
-            expect(err instanceof NotFoundError).toBeTruthy();
-        }
-    });
-    test("not found error if itinerary doesn't exist", async () => {
-        try{
-            await User.toggleLike("u2", 2);
-        }catch(err){
-            expect(err instanceof NotFoundError).toBeTruthy();
-        }
-    });
+    // test("not found error if user doesn't exist", async () => {
+    //     try{
+    //         await User.toggleLike("u4", 1);
+    //     }catch(err){
+    //         expect(err instanceof NotFoundError).toBeTruthy();
+    //     }
+    // });
+    // test("not found error if itinerary doesn't exist", async () => {
+    //     try{
+    //         await User.toggleLike("u2", 2);
+    //     }catch(err){
+    //         expect(err instanceof NotFoundError).toBeTruthy();
+    //     }
+    // });
 });

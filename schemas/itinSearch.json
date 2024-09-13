@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "Itinerary Search Schema",
+    "properties": {
+      "duration": {
+        "type": "integer",
+        "exclusiveMinimum": 0
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "country": {
+        "type": "string",
+        "minLength": 1
+      },
+      "tag": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "additionalProperties": false,
+    "required": []
+  }
+  

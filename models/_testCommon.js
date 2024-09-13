@@ -1,11 +1,13 @@
 "use strict";
-/** Test functions to run before tests */
+/** Test functions to run before models tests */
 
 const bcrypt = require("bcrypt");
 const db = require("../config/db");
 const { BCRYPT_WORK_FACTOR } = require("../config/config");
 
-async function commonBeforeAll(){
+
+async function commonBeforeEach() {
+    await db.query("BEGIN");
     await db.query("DELETE FROM users");
     await db.query("DELETE FROM itineraries");
     await db.query("DELETE FROM tags");
@@ -33,22 +35,36 @@ async function commonBeforeAll(){
                                 duration,
                                 city,
                                 country,
+                                lat,
+                                lng,
                                 description)
-        VALUES (1, 'u1', 'testItin', 3, 'testCity', 'testCountry','testDesc');
+        VALUES (1, 'u1', 'testItin', 3, 'testCity', 
+                'testCountry', 1.1, 1.1,'testDesc');
     `);
     
+    // insert test place data
+    await db.query(`INSERT INTO places(itin_id,
+                                        name,
+                                        address,
+                                        lat,
+                                        lng,
+                                        seq,
+                                        description,
+                                        image)
+                    VALUES (1, 'testPlace', 'testAddress', 
+                            10.0, 10.0, 1, 'testDesc', 'image.png')`);
+
     // insert test tag data
     await db.query(`
         INSERT INTO tags(id, name, description)
-        VALUES (1, 'testTag1', 'testDescription1')`)
+        VALUES (1, 'testTag1', 'testDescription1'),
+                (2, 'testTag2', 'testDescription2'),
+                (3, 'testTag3', 'testDescription3')`
+    )
     // associate with itinerary
     await db.query(`
         INSERT INTO itin_tags(itin_id, tag_id)
         VALUES (1, 1)`)
-}
-
-async function commonBeforeEach() {
-    await db.query("BEGIN");
   }
   
   async function commonAfterEach() {
@@ -61,7 +77,6 @@ async function commonBeforeEach() {
   
   
 module.exports = {
-    commonBeforeAll,
     commonBeforeEach,
     commonAfterEach,
     commonAfterAll,

@@ -4,6 +4,9 @@
 const express = require("express");
 const router = new express.Router();
 
+// Middleware
+const { ensureLoggedIn, ensureCorrectUserOrAdmin } = require("../middleware/auth");
+
 // Schemas for Data Validation
 const jsonschema = require("jsonschema");
 const userUpdateSchema = require("../schemas/userUpdate.json");
@@ -20,7 +23,7 @@ const { BadRequestError } = require("../config/expressError");
  *      and likes is [{itin}, {itin}]
  * Authorization required: logged in users
  */
-router.get("/:username", async function(req, res, next){
+router.get("/:username", ensureLoggedIn, async function(req, res, next){
     try{
         const user = await User.get(req.params.username);
         return res.json({ user })
@@ -35,7 +38,7 @@ router.get("/:username", async function(req, res, next){
  * Data can include {username, password, firstName, lastName, location, bio, profilePic}
  * Authorization required: matching user or admin
 */
-router.patch("/:username", async function(req, res, next){
+router.patch("/:username", ensureCorrectUserOrAdmin, async function(req, res, next){
     try{
         // validating header data to prevent updating admin status
         const forbiddenFields = ["isAdmin", "is_admin"]
@@ -63,9 +66,9 @@ router.patch("/:username", async function(req, res, next){
  * Returns { deleted: username }
  * Authorization required: matching user or admin
  */
-router.delete("/:username", async function(req, res, next){
+router.delete("/:username", ensureCorrectUserOrAdmin, async function(req, res, next){
     try{
-        await User.remove(req.params.username);
+        await User.delete(req.params.username);
         return res.json({deleted: req.params.username});
     }
     catch(err){
@@ -79,7 +82,7 @@ router.delete("/:username", async function(req, res, next){
  * Returns { message: "liked" / "unliked", id}
  * Authorization required: matching user or admin
  */
-router.post("/:username/like/:id", async function(req, res, next){
+router.post("/:username/like/:id", ensureCorrectUserOrAdmin, async function(req, res, next){
     try{
         const itinId = +req.params.id;
         const result = await User.toggleLike(req.params.username, itinId);
