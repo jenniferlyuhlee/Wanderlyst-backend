@@ -17,6 +17,37 @@ beforeEach(commonBeforeEach);
 afterEach(commonAfterEach);
 afterAll(commonAfterAll);
 
+/** GET /tags ---------- */
+describe("GET /tags", () => {
+    test("works as expected: user", async () => {
+        const resp = await request(app)
+        .get("/tags")
+        .set("authorization", `Bearer ${u2Token}`);
+
+        expect(resp.statusCode).toEqual(200);
+        expect(resp.body).toEqual({tags: [
+            "testTag1", 
+            "testTag2",
+            "testTag3"
+        ]});
+    });
+    test("works as expected: admin", async () => {
+        const resp = await request(app)
+        .get("/tags")
+        .set("authorization", `Bearer ${adminToken}`);
+
+        expect(resp.statusCode).toEqual(200);
+        expect(resp.body.tags.length).toEqual(3);
+    });
+    test("unauth error for anon", async () => {
+        const resp = await request(app)
+        .get("/tags");
+
+        expect(resp.statusCode).toEqual(401);
+    });
+});
+
+
 /** GET /tags/:name ---------- */
 describe("GET /tags/:name", () => {
     test("works as expected: user", async () => {

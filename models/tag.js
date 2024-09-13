@@ -20,6 +20,19 @@ class Tag{
         return tag;
     }
 
+    /** Fetches all tags
+     * Returns tags: [{tag}, {tag}] 
+     * where tags is an array of tag names
+     */
+    static async getAll(){
+        const results = await db.query(`
+            SELECT name
+            FROM tags
+        `);
+        const tags = results.rows.map(r => r.name);
+        return tags;
+    }
+
     /** Fetches details about tag
      * Returns tag obj {name, description, itineraries: [{itin}, {itin}]}
      * where itineraries is an array of objects holding itinerary data
