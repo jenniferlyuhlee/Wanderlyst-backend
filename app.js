@@ -2,7 +2,7 @@
 /** Express app for WanderLyst */
 
 const express = require("express");
-// cors?
+const cors = require("cors");
 
 const { NotFoundError } = require("./config/expressError");
 const { authenticateJWT } = require("./middleware/auth")
@@ -14,7 +14,7 @@ const tagRoutes = require("./routes/tags");
 const itinRoutes = require("./routes/itineraries");
 
 const app = express();
-// app.use cors?
+app.use(cors())
 app.use(express.json())
 // app.use morgan?
 app.use(authenticateJWT);

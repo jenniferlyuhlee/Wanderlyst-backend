@@ -28,7 +28,9 @@ router.get("/", ensureLoggedIn, async function(req, res, next){
  */
 router.get("/:name", ensureLoggedIn, async function(req, res, next){
     try{
-        const tag = await Tag.get(req.params.name);
+        // route parameter takes "Name" or "name"
+        const tagName = req.params.name.replace(/^./, (match) => match.toUpperCase());
+        const tag = await Tag.get(tagName);
         return res.json({ tag })
     }
     catch(err){
