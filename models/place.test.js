@@ -31,8 +31,9 @@ const placeList = [data, {
     address: "test address2",
     lat: 2.0,
     lng: 2.0,
-    seq: 3,
-    description: "test description2"
+    seq: "2",
+    description: "test description2",
+    image: "testimage"
 }];
 console.log(itinIds)
 
@@ -59,6 +60,7 @@ describe("Place.addPlaces", () => {
     test("works as expected", async () => {
         const places = await Place.addPlaces(1, placeList);
         expect(places).toEqual([expect.any(Number), expect.any(Number)]);
+        
     });
 });
 

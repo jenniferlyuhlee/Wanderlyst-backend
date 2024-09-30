@@ -24,7 +24,7 @@ router.post("/login", async function (req, res, next){
         const validator = jsonschema.validate(req.body, userAuthSchema);
         if(!validator.valid){
             const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(`Fix inputs: ${errs}`);
+            throw new BadRequestError(errs);
         }
 
         const {username, password} = req.body;
@@ -48,7 +48,7 @@ router.post("/signup", async function (req, res, next){
         const validator = jsonschema.validate(req.body, userRegisterSchema);
         if(!validator.valid){
             const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(`Fix inputs: ${errs}`);
+            throw new BadRequestError(errs);
         }
         const newUser = await User.register(req.body);
         const token = createToken(newUser);

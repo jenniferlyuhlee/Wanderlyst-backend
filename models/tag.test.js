@@ -30,7 +30,17 @@ describe("Tag.getAll", () => {
     test("works as expected", async () => {
         const tags = await Tag.getAll();
         expect(tags.length).toEqual(3);
-        expect(tags).toEqual(["testTag1", "testTag2", "testTag3",]);
+        expect(tags).toEqual([
+            {
+                id: 1,
+                name: "testTag1"},
+            {
+                id: 2,
+                name: "testTag2"},
+            {
+                id: 3,
+                name: "testTag3"}
+        ]);
     })
 });
 
@@ -48,7 +58,8 @@ describe("Tag.get", () => {
                     title: 'testItin',
                     duration: 3,
                     city: 'testCity', 
-                    country: 'testCountry'
+                    country: 'testCountry',
+                    description: "testDesc"
                 }
             ]
         })

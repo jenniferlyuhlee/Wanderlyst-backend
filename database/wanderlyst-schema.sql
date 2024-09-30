@@ -36,22 +36,6 @@ CREATE TABLE places (
     image TEXT
 );
 
--- CREATE TABLE places (
---     id SERIAL PRIMARY KEY,
---     name TEXT NOT NULL,
---     address TEXT NOT NULL,
---     latitude DECIMAL(9,6) NOT NULL,
---     longitude DECIMAL(9,6) NOT NULL
--- );
-
--- CREATE TABLE itin_places (
---     id SERIAL PRIMARY KEY,
---     itin_id INT REFERENCES itineraries ON DELETE CASCADE,
---     place_id INT REFERENCES places,
---     sequence INT NOT NULL,
---     image TEXT
--- );
-
 CREATE TABLE likes (
     username VARCHAR(25)  REFERENCES users ON DELETE CASCADE,
     itin_id INT REFERENCES itineraries ON DELETE CASCADE,

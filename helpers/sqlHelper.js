@@ -38,7 +38,7 @@ function buildTagsValuesClause(itinId, tagIds){
     const values = [itinId];
     // push tag ids to values array
     const placeholders = tagIds.map((id, i) => {
-        values.push(id);
+        values.push(+id);
         return `($1, $${i+2})`;
     }).join(", ");
     

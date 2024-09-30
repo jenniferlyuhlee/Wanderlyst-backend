@@ -107,12 +107,12 @@ class User{
         // user itineraries and likes
         const [userItinsRes, userLikesRes] = await Promise.all([
             db.query(
-                `SELECT i.id, i.title, i.duration, i.city, i.country
+                `SELECT i.id, i.username, i.title, i.duration, i.city, i.country, i.description
                 FROM itineraries AS i
                 WHERE i.username = $1`, [username]
             ),
             db.query(
-                `SELECT i.id, i.username, i.title, i.duration, i.city, i.country
+                `SELECT i.id, i.username, i.title, i.duration, i.city, i.country, i.description
                 FROM itineraries AS i
                 JOIN likes AS l
                 ON i.id = l.itin_id
@@ -122,10 +122,12 @@ class User{
 
         user.itineraries = userItinsRes.rows.map(r => ({
             id: r.id,
+            username: r.username,
             title: r.title,
             duration: r.duration,
             city: r.city, 
-            country: r.country
+            country: r.country,
+            description: r.description
         }));
         
         user.likes = userLikesRes.rows.map(r => ({
@@ -134,7 +136,8 @@ class User{
             title: r.title,
             duration: r.duration,
             city: r.city, 
-            country: r.country
+            country: r.country,
+            description: r.description
         }));
 
         return user;
@@ -149,6 +152,18 @@ class User{
         if(data.password){
             data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
         }
+
+        // // Checks is username is taken
+        // if(data.username){
+        //     const usernameCheck = await db.query(
+        //         `SELECT username
+        //          FROM users
+        //          WHERE USERNAME = $1`, [data.username]
+        //     );
+        //     if (usernameCheck.rows[0]){
+        //         throw new BadRequestError(`Username taken: ${data.username}`);
+        //     }
+        // }
         
         const {setCols, values} = sqlForPartialUpdate(
             data,

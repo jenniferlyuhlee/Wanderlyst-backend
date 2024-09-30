@@ -15,7 +15,6 @@ const userUpdateSchema = require("../schemas/userUpdate.json");
 const User = require("../models/user");
 const { BadRequestError } = require("../config/expressError");
 
-
 /** GET/:username => {user}
  * Returns {username, email, firstName, lastName, location,
  * bio, profilePic, createdAt, isAdmin, itineraries, likes }
@@ -51,7 +50,7 @@ router.patch("/:username", ensureCorrectUserOrAdmin, async function(req, res, ne
         const validator = jsonschema.validate(req.body, userUpdateSchema);
         if(!validator.valid){
             const errs = validator.errors.map(e => e.stack);
-            throw new BadRequestError(`Fix inputs: ${errs}`)
+            throw new BadRequestError(errs)
         }
         const user = await User.update(req.params.username, req.body);
         return res.json({ user })

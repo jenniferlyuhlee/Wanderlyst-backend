@@ -114,7 +114,8 @@ describe("get", () => {
                     title: "testItin",
                     duration: 3,
                     city: 'testCity', 
-                    country: 'testCountry'
+                    country: 'testCountry',
+                    description: 'testDesc'
                 }
             ]
         });

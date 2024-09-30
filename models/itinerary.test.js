@@ -80,7 +80,8 @@ describe("Itinerary.getAll", () => {
                 title: 'testItin',
                 duration: 3,
                 city: 'testCity',
-                country: 'testCountry'
+                country: 'testCountry',
+                description: 'testDesc'
             }
         ]);
     });
@@ -99,6 +100,7 @@ describe("Itinerary.getAll", () => {
                 duration: 1, 
                 city: "test city",
                 country: "test country",
+                description: "create new itin test",
             }
         ]);
     });
@@ -118,6 +120,12 @@ describe("Itinerary.getAll", () => {
         const res1 = await Itinerary.getAll({duration: 3})
         expect(res1.length).toEqual(1);
         const res2 = await Itinerary.getAll({duration: 2})
+        expect(res2.length).toEqual(0);
+    });
+    test("works as expected: tag filter", async () => {
+        const res1 = await Itinerary.getAll({tags: ["testTag1"]})
+        expect(res1.length).toEqual(1);
+        const res2 = await Itinerary.getAll({tags: ["no tag"]})
         expect(res2.length).toEqual(0);
     });
     test("bad req error: duration < 0", async () => {

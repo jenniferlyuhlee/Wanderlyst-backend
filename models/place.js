@@ -52,7 +52,7 @@ class Place{
                 name, address, lat, lng,
                 seq, description, image
             FROM places
-            WHERE itin_id = $1`, [1]
+            WHERE itin_id = $1`, [itinId]
         );
         return results.rows;
     }

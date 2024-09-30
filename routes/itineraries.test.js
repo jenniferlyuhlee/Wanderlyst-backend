@@ -139,7 +139,8 @@ describe("GET /itineraries", () => {
                 title: 'testItin',
                 duration: 3,
                 city: 'testCity',
-                country: 'testCountry'
+                country: 'testCountry',
+                description: 'testDesc'
             }
         ]});
     });
@@ -152,10 +153,10 @@ describe("GET /itineraries", () => {
         expect(resp.statusCode).toEqual(200);
         expect(resp.body).toEqual({itineraries: []});
     });
-    test("works as expected: filter title", async () => {
+    test("works as expected: filter tags", async () => {
         const resp = await request(app)
         .get("/itineraries")
-        .query({title: "test"})
+        .query({tags: ["testTag1", "noTag"]})
         .set("authorization", `Bearer ${u2Token}`);
 
         expect(resp.statusCode).toEqual(200);
@@ -209,24 +210,24 @@ describe("GET /itineraries/:id", () => {
                 likes: "0",
                 tags: ["testTag1", "testTag2", "testTag3"],
                 places: [
-                    // {
-                    //     name: "testPlace1",
-                    //     address: "testAddress1",
-                    //     lat: expect.any(String),
-                    //     lng: expect.any(String),
-                    //     seq: 1, 
-                    //     description: "testDesc1",
-                    //     image: "image.png"
-                    // },
-                    // {
-                    //     name: "testPlace2",
-                    //     address: "testAddress2",
-                    //     lat: expect.any(String),
-                    //     lng: expect.any(String),
-                    //     seq: 2, 
-                    //     description: "testDesc2",
-                    //     image: "image.png"
-                    // }
+                    {
+                        name: "testPlace1",
+                        address: "testAddress1",
+                        lat: expect.any(String),
+                        lng: expect.any(String),
+                        seq: 1, 
+                        description: "testDesc1",
+                        image: "image.png"
+                    },
+                    {
+                        name: "testPlace2",
+                        address: "testAddress2",
+                        lat: expect.any(String),
+                        lng: expect.any(String),
+                        seq: 2, 
+                        description: "testDesc2",
+                        image: "image.png"
+                    }
                 ]
             }
         });

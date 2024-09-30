@@ -36,10 +36,10 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next){
     // Default status is 500 Internal Server Error
     const status = err.status || 500;
-    const msg = err.msg
+    const message = err.message
     
     return res.status(status).json({
-        error: {msg, status}
+        error: {message, status}
     });
 });
 

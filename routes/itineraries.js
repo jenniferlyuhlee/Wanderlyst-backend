@@ -38,9 +38,10 @@ router.post("/", ensureLoggedIn, async function (req, res, next){
             throw new BadRequestError(errs);
         }
 
-        const { title, duration, city, country, description, tags, places } = req.body;
-        const username = res.locals.user.username;
-        
+        let { title, duration, city, country, description, tags, places } = req.body;
+        let username = res.locals.user.username;
+        duration = +duration;
+
         // returns {lat, lng}
         const { lat, lng } = await getCoords(`${city}, ${country}`)
         // 1: Create itinerary 
@@ -102,7 +103,7 @@ router.delete("/:id/:username", ensureCorrectUserOrAdmin, async function (req, r
 router.get("/", ensureLoggedIn, async function (req, res, next){
     const q = req.query;
     // convert string query to integer
-    if (q.duration !== undefined) q.duration = +q.duration;
+    if (q.duration) q.duration = +q.duration;
 
     try{
         const validator = jsonschema.validate(q, itinSearchSchema);
@@ -127,9 +128,7 @@ router.get("/", ensureLoggedIn, async function (req, res, next){
 router.get("/:id", ensureLoggedIn, async function(req, res, next){
    try{
        const itinerary = await Itinerary.get(req.params.id);
-    //    const mapData = await toMapData(itinerary);
-    //    return res.json({ itinerary, mapData})
-    return res.json({itinerary})
+       return res.json({itinerary});
    }
    catch(err){
        return next(err);

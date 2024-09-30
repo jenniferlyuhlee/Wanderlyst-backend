@@ -54,48 +54,42 @@ class Itinerary{
         return itinerary;
     }
 
-    /** Updates user data through partial update (only fields provided); 
-     * Data can include {title, duration, city, country, description}
-     * Returns {username, title, duration, city, country, description}
-     * Throws NotFoundError if itinerary not found
-    */
-//    static async update(id, data){
-
-//    }
-
 
     /** Fetches all itineraries (opetional filter on searchFilters) 
      * searchFilters (optional):
      * - title (will find case-insensitive, partial matches)
      * - country (will find case-insensitive, partial matches)
      * - duration
-     * - tag
+     * - tagS
      * Returns [{id, username, title, duration, city, country}]
     */
    static async getAll(searchFilters = {}){
-    let query = `SELECT i.id, i.username, i.title, i.duration, i.city, i.country
+    let query = `SELECT DISTINCT i.id, i.username, i.title, i.duration, i.city, i.country, i.description
                 FROM itineraries as i`;
     let whereExpressions = [];
     let queryValues = [];
 
-    const { title, country, duration, tag } = searchFilters;
+    const { title, country, duration, tags } = searchFilters;
 
-    if(duration < 0) throw new BadRequestError("Duration must be greater than 0");
+    // Throw an error if invalid duration
+    if(duration <= 0) throw new BadRequestError("Duration must be greater than 0");
 
     // For each possible search term, add to whereExpressions and queryValues so
     // we can generate the right SQL
-    if(tag !== undefined){
-        query += `LEFT JOIN itin_tags as it ON i.id = it.itin_id
+    if(tags !== undefined && tags.length > 0){
+        query += ` LEFT JOIN itin_tags as it ON i.id = it.itin_id
                   LEFT JOIN tags as t ON it.tag_id = t.id`;
-        queryValues.push(tag)
-        whereExpressions.push(`t.name = $${queryValues.length}`)
+    
+        queryValues.push(...tags)
+        let tagConditions = tags.map((tag, i) => `t.name = $${queryValues.length - tags.length + i + 1}`)
+        whereExpressions.push(`(${tagConditions.join(" OR ")})`);
     }
     if(country !== undefined){
         queryValues.push(`%${country}%`);
         whereExpressions.push(`i.country ILIKE $${queryValues.length}`);
     }
     if(duration !== undefined){
-        queryValues.push(duration);
+        queryValues.push(+duration);
         whereExpressions.push(`i.duration <= $${queryValues.length}`);
     }
     if(title !== undefined){
@@ -119,39 +113,11 @@ class Itinerary{
     * Throws NotFoundError if itinerary not found
     */
    static async get(id){
-        // // Query 1 to get itinerary details
-        // const itinResult = await db.query(
-        //     `SELECT id, username, title, 
-        //             duration, city, country, 
-        //             description, created_at AS "createdAt"
-        //     FROM itineraries
-        //     WHERE id = $1 `, [id]
-        // );
-        // const itinerary = itinResult.rows[0];
-        // if(!itinerary) throw new NotFoundError(`Itinerary with id ${id} doesn't exist`);
-
-        // // Query 2 to get tags of itinerary
-        // const tagsResult = await db.query(
-        //     `SELECT name
-        //     FROM tags as t
-        //     LEFT JOIN itin_tags as it
-        //     ON t.id = it.tag_id
-        //     WHERE it.id = $1`, [id]
-        // );
-        // itinerary.tags = tagsResult.rows.map(t => t.name);
-
-        // // Query 3 to get itinerary likes
-        // const likesResult = await db.query(
-        //     `SELECT COUNT(*)
-        //     FROM likes
-        //     WHERE itin_id = $1`, [id]
-        // )
-        // itinerary.likes - likesResult.rows[0]
         const result = await db.query(
             `SELECT i.id, i.username, i.title, i.duration, i.city, i.country, 
                     i.lat, i.lng, i.description, i.created_at AS "createdAt",
                     array_agg(t.name) AS tags,
-                    COUNT(l.itin_id) AS likes
+                    (SELECT COUNT(*) FROM likes l WHERE l.itin_id = i.id) AS likes
             FROM itineraries AS i
             LEFT JOIN itin_tags AS it
             ON i.id = it.itin_id

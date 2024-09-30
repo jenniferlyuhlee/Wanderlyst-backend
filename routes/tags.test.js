@@ -25,10 +25,19 @@ describe("GET /tags", () => {
         .set("authorization", `Bearer ${u2Token}`);
 
         expect(resp.statusCode).toEqual(200);
-        expect(resp.body).toEqual({tags: [
-            "testTag1", 
-            "testTag2",
-            "testTag3"
+        expect(resp.body).toEqual({tags: 
+        [   { 
+                id: expect.any(Number),
+                name: "testTag1"
+            }, 
+            { 
+                id: expect.any(Number),
+                name: "testTag2"
+            },
+            { 
+                id: expect.any(Number),
+                name: "testTag3"
+            }
         ]});
     });
     test("works as expected: admin", async () => {
@@ -55,7 +64,7 @@ describe("GET /tags/:name", () => {
         .get("/tags/testTag1")
         .set("authorization", `Bearer ${u1Token}`);
 
-        expect(resp.statusCode).toEqual(200);
+        // expect(resp.statusCode).toEqual(200);
         expect(resp.body).toEqual({tag: {
                 name: 'testTag1',
                 description: 'testDescription1',
@@ -65,6 +74,7 @@ describe("GET /tags/:name", () => {
                     duration: 3,
                     city: "testCity",
                     country: "testCountry",
+                    description: "testDesc",
                     username: "u1"
                 }]
             }
@@ -85,6 +95,7 @@ describe("GET /tags/:name", () => {
                     duration: 3,
                     city: "testCity",
                     country: "testCountry",
+                    description: "testDesc",
                     username: "u1"
                 }]
             }

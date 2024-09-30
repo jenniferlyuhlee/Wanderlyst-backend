@@ -16,9 +16,11 @@
         "type": "string",
         "minLength": 1
       },
-      "tag": {
-        "type": "string",
-        "minLength": 1
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
       }
     },
     "additionalProperties": false,

@@ -4,7 +4,7 @@
 const { Client } = require("@googlemaps/google-maps-services-js");
 const client = new Client({});
 const { API_KEY } = require("../config/config");
-const { UnprocessableError }= require("../config/expressError")
+const { UnprocessableError, BadRequestError }= require("../config/expressError")
 
 /** Fetches coordinates based on address sent to Google Geocoding API
  * @param {String} address   
@@ -21,12 +21,13 @@ async function getCoords(address) {
         });
         // if API doesn't return coordinates
         if (res.data.status !== "OK"){
-            throw new UnprocessableError(`Input error: ${res.data.status}`)
+            throw new UnprocessableError(`Input error: ${res.data.status}`);
         };
+        // else return coordinates
         return res.data.results[0].geometry.location;
     }
     catch(err){
-        console.error(`Error fetching coordinates: ${err.message}`);
+        throw new BadRequestError(`Error fetching coordinates: invalid location or address.`);
     }
 }
 // run "node utils/geocode.js"
