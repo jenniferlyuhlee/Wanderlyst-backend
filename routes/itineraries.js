@@ -79,7 +79,7 @@ router.post("/", ensureLoggedIn, async function (req, res, next){
  */
 router.delete("/:id/:username", ensureCorrectUserOrAdmin, async function (req, res, next){
     try{
-        await Itinerary.delete(req.params.id, req.params.username);
+        await Itinerary.delete(+req.params.id, req.params.username);
         return res.json({
             deleted: +req.params.id, 
             user: req.params.username
