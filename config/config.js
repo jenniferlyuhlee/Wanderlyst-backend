@@ -6,7 +6,7 @@ require("colors");
 
 // Retrieve environmental variables
 const SECRET_KEY = process.env.SECRET_KEY;
-const PORT = +process.env.PORT;
+const PORT = +process.env.PORT || 3001;
 const API_KEY = process.env.API_KEY;
 
 // Get db uri based on node environment - test or prod/dev
