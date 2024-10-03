@@ -27,12 +27,9 @@ async function getCoords(address) {
         return res.data.results[0].geometry.location;
     }
     catch(err){
-        throw new BadRequestError(`Error fetching coordinates: invalid location or address.`);
+        throw new BadRequestError(`Error fetching coordinates: invalid city/country.`);
     }
 }
-// run "node utils/geocode.js"
-// console.log(API_KEY)
-
 
 /** Modified list of places data to include lat, lng based on address
  * calls the geocode helper function
@@ -40,20 +37,20 @@ async function getCoords(address) {
  * @returns {Array} - Array of place objects w/ lat, lng 
  */
 async function updatePlacesWithCoords(places){
-    const updatedPlaces = await Promise.all(
-        places.map(async (p) => {
-            let { lat, lng } = await getCoords(p.address);
-            return {...p, lat, lng};
-        })
-    );
-    return updatedPlaces;
+    try{
+        const updatedPlaces = await Promise.all(
+            places.map(async (p) => {
+                let { lat, lng } = await getCoords(p.address);
+                return {...p, lat, lng};
+            })
+        );
+        return updatedPlaces;
+    }
+    catch(err){
+        throw new BadRequestError(`Error fetching coordinates: invalid place address.`, err);
+    }
+
 }
 
 module.exports = { getCoords , updatePlacesWithCoords};
-
-// (async () => {
-//     const address = 'Paris, France';
-//     const coords = await getCoords(address);
-//     console.log(coords); // { latitude: 37.4224764, longitude: -122.0842499 }
-// })();
 

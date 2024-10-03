@@ -23,5 +23,5 @@ VALUES
 ('Flâneur', 'Embrace the art of wandering. Stroll through charming streets, soak in the local atmosphere, and watch the world go by with an itinerary designed for the curious wanderer.'),
 ('Reveller', 'Party like there''s no tomorrow. Whether it''s nighlife, music festivals, or the hottest events, join the celebration and dance the night away.'),
 ('Aesthete', 'Step into the heart of culture. Explore museums, historical landmarks, and art galleries. Immerse yourself in the stories, art, and traditions of every destination.'),
-('Relaxationist', 'Find your bliss. From peaceful spas to serene beaches, recharge your soul with itineraries designed for the ultimate relaxation and tranquility.'),
+('Relaxer', 'Find your bliss. From peaceful spas to serene beaches, recharge your soul with itineraries designed for the ultimate relaxation and tranquility.'),
 ('Photographer', 'Capture the world''s beauty through your lens. Discover the most scenic spots, from breathtaking landscapes to vibrant city views, perfect for your next snapshot.')

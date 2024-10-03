@@ -30,6 +30,7 @@ const { getCoords, updatePlacesWithCoords } = require("../utils/geocode");
 */
 router.post("/", ensureLoggedIn, async function (req, res, next){
     let itinerary;
+    let username = res.locals.user.username;
     try{
         // validate req.body data
         const validator = jsonschema.validate(req.body, itinCreateSchema);
@@ -39,7 +40,6 @@ router.post("/", ensureLoggedIn, async function (req, res, next){
         }
 
         let { title, duration, city, country, description, tags, places } = req.body;
-        let username = res.locals.user.username;
         duration = +duration;
 
         // returns {lat, lng}
@@ -65,8 +65,8 @@ router.post("/", ensureLoggedIn, async function (req, res, next){
         // if error is caught from server (external API or db insertion error in Places table)
         // if not, cancels entire db insertion to clean up 
         // deletes from itineraries table and its associations (itin_tags) if created
-        if(itinerary){
-            await Itinerary.delete(itinerary.id);
+        if(itinerary !== undefined){
+            await Itinerary.delete(itinerary.id, username);
         }
         return next(err);
     }
