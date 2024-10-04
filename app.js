@@ -2,7 +2,6 @@
 /** Express app for WanderLyst */
 
 const express = require("express");
-const cors = require("cors");
 
 const { NotFoundError } = require("./config/expressError");
 const { authenticateJWT } = require("./middleware/auth")
@@ -15,8 +14,16 @@ const itinRoutes = require("./routes/itineraries");
 
 const app = express();
 
+const cors = require("cors");
+const allowedOrigins = ['http://localhost:5173', 'https://wanderlyst.onrender.com'];
 app.use(cors({
-    origin: 'https://wanderlyst.onrender.com',
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true
 }));
 
