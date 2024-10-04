@@ -116,7 +116,7 @@ class Itinerary{
         const result = await db.query(
             `SELECT i.id, i.username, i.title, i.duration, i.city, i.country, 
                     i.lat, i.lng, i.description, i.created_at AS "createdAt",
-                    array_agg(t.name) AS tags,
+                    array_agg(DISTINCT t.name) AS tags,
                     (SELECT COUNT(*) FROM likes l WHERE l.itin_id = i.id) AS likes
             FROM itineraries AS i
             LEFT JOIN itin_tags AS it
