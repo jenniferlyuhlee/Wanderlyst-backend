@@ -14,9 +14,13 @@ const tagRoutes = require("./routes/tags");
 const itinRoutes = require("./routes/itineraries");
 
 const app = express();
-app.use(cors())
+
+app.use(cors({
+    origin: 'https://wanderlyst.onrender.com',
+    credentials: true
+}));
+
 app.use(express.json())
-// app.use morgan?
 app.use(authenticateJWT);
 
 /** Routes */
@@ -24,8 +28,6 @@ app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/tags", tagRoutes);
 app.use("/itineraries", itinRoutes);
-
-
 
 /** 404 Error Handler */
 app.use(function (req, res, next) {
