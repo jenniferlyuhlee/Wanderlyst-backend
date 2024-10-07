@@ -22,9 +22,7 @@ const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
 // Logging configurations
 console.log("WanderLyst Config:".green);
-console.log("PORT:".yellow, PORT.toString());
-console.log("BCRYPT_WORK_FACTOR:".yellow, BCRYPT_WORK_FACTOR);
-console.log("Database:".yellow, getDatabaseURI());
+console.log("PORT:".green, PORT.toString());
 console.log("***********".green)
 
 module.exports = {
